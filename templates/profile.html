@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CropWise Profile</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;min-height:100vh;background:url('/static/bg.jpg') center/cover no-repeat fixed}
+.page{min-height:100vh;margin-left:245px;padding:40px 30px}
+.profile-container{max-width:650px;margin:auto}
+.header{color:white;margin-bottom:25px}
+.header h1{margin:0 0 7px;font-size:30px}
+.header p{margin:0;color:#dcebe4}
+.profile-card{
+    background:rgba(255,255,255,.35);
+    border-radius:15px;
+    padding:22px;
+    box-shadow:0 5px 18px rgba(0,0,0,.12);
+    margin-bottom:16px;
+}
+.profile-top{text-align:center;border-bottom:1px solid #e1e8e4;padding-bottom:25px;margin-bottom:25px}
+.avatar{
+    width:65px;
+    height:65px;
+    margin:auto;
+    border-radius:50%;
+    background:#087f3d;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+}
+.profile-top h2{margin:10px 0 4px;color:#26352e;font-size:22px}
+.profile-top p{margin:0;color:#000;font-size:14px} 
+.section-title{font-size:18px;font-weight:bold;color:#26352e;margin-bottom:14px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.info-box{background:rgba(245,250,247,.55);padding:11px;border-radius:9px}
+.info-box span{display:block;font-size:12px;color:#718078;margin-bottom:6px}
+.info-box strong{font-size:15px;color:#26352e}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+.stat{background:#f4f7f5;border-radius:10px;padding:18px;text-align:center}
+.stat strong{display:block;font-size:25px;color:#087f3d;margin-bottom:6px}
+.stat span{font-size:12px;color:#718078}
+@media(max-width:700px){.page{margin-left:65px;padding:25px 15px}.info,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="sidebar-logo">
+<div class="logo-icon">🌿</div>
+<div class="logo-text">CropWise</div>
+</div>
+<nav class="sidebar-menu">
+<a href="{{ url_for('dashboard') }}" class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+<span>🏠</span><span>Dashboard</span>
+</a>
+<a href="{{ url_for('soil') }}" class="menu-item {% if active_page == 'soil' %}active{% endif %}">
+<span>🧪</span><span>Soil & Climate</span>
+</a>
+<a href="#" class="menu-item {% if active_page == 'results' %}active{% endif %}">
+<span>📊</span><span>Results</span>
+</a>
+<a href="{{ url_for('history') }}" class="menu-item {% if active_page == 'history' %}active{% endif %}">
+<span>📜</span><span>History</span>
+</a>
+<a href="{{ url_for('profile') }}" class="menu-item {% if active_page == 'profile' %}active{% endif %}">
+<span>👤</span><span>Profile</span>
+</a>
+<a href="#" class="menu-item">
+<span>⚙️</span><span>Settings</span>
+</a>
+</nav>
+<div class="sidebar-bottom">
+<a href="{{ url_for('logout') }}" class="menu-item logout">
+<span>🚪</span><span>Logout</span>
+</a>
+</div>
+</aside>
+<div class="page">
+<div class="profile-container">
+<div class="header">
+<h1>👤 My Profile</h1>
+<p>Manage your CropWise account information</p>
+</div>
+<div class="profile-card">
+<div class="profile-top">
+<div class="avatar">{{ initial }}</div>
+<h2>{{ name }}</h2>
+<p>{{ email }}</p>
+</div>
+<div class="section-title">Personal Information</div>
+<div class="info">
+<div class="info-box">
+<span>Name</span>
+<strong>{{ name }}</strong>
+</div>
+<div class="info-box">
+<span>Email</span>
+<strong>{{ email }}</strong>
+</div>
+</div>
+</div>
+<div class="profile-card">
+<div class="section-title">CropWise Statistics</div>
+<div class="stats">
+<div class="stat">
+<strong>{{ total }}</strong>
+<span>Total Predictions</span>
+</div>
+<div class="stat">
+<strong>{{ last[0] if last else '--' }}</strong>
+<span>Last Recommended Crop</span>
+</div>
+<div class="stat">
+<strong>{{ last[1] if last else '--' }}</strong>
+<span>Last Prediction</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Climate Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    background:url('/static/bg2.jpg') center/cover no-repeat;
+}
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:245px;
+    height:100vh;
+    background:rgba(10,25,20,.94);
+    backdrop-filter:blur(12px);
+    border-right:1px solid rgba(255,255,255,.1);
+    padding:25px 15px;
+    z-index:1000;
+}
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:5px 12px 30px;
+}
+.logo-icon{font-size:30px}
+.logo-text{
+    color:white;
+    font-size:24px;
+    font-weight:700;
+}
+.sidebar-menu{
+    display:flex;
+    flex-direction:column;
+    gap: 3px;
+}
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:#d5e7df;
+    text-decoration:none;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:15px;
+    transition:.2s;
+}
+.menu-item:hover{
+    background:rgba(16,185,129,.15);
+    color:white;
+}
+.menu-item.active{
+    background:linear-gradient(90deg,#10b981,#059669);
+    color:white;
+    box-shadow:0 5px 15px rgba(16,185,129,.25);
+}
+.menu-item span:first-child{
+    width:22px;
+    text-align:center;
+    font-size:17px;
+}
+.sidebar-bottom{
+    margin-top:45px;
+    padding-top:15px;
+    border-top:1px solid rgba(255,255,255,.15);
+}
+
+.logout:hover{
+    background:rgba(239,68,68,.15);
+    color:#ffb4b4;
+}
+.lang-container{
+    position:fixed;
+    top:22px;
+    right:25px;
+    z-index:9999;
+}
+.lang-select{
+    background:#111827;
+    color:white;
+    font-size:14px;
+    font-weight:500;
+    padding:10px 38px 10px 16px;
+    border:1px solid #10b981;
+    border-radius:12px;
+    outline:none;
+    cursor:pointer;
+    box-shadow:0 0 12px rgba(16,185,129,.5);
+}
+.lang-select option{
+    background:#1f2937;
+    color:white;
+}
+.page{
+    min-height:100vh;
+    margin-left:245px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:35px 25px;
+}
+.card{
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(14px);
+    padding:28px 30px;
+    border-radius:20px;
+    width:420px;
+    max-width:95%;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,255,120,.35),0 0 40px rgba(0,255,120,.18);
+}
+h2{
+    color:white;
+    margin:0 0 20px;
+    font-size:24px;
+}
+label{
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    display:block;
+    margin-bottom:5px;
+    text-align:left;
+}
+input,select{
+    width:100%;
+    padding:11px;
+    margin:5px 0 10px;
+    border-radius:10px;
+    border:none;
+    background:rgba(255,255,255,.9);
+    outline:none;
+    font-size:14px;
+}
+.locked-field{
+    background:rgba(225,232,235,.95)!important;
+    color:#344054;
+    font-weight:700;
+    cursor:not-allowed;
+    border:1px dashed rgba(0,180,216,.7)!important;
+}
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+button:hover{
+    transform:translateY(-1px);
+}
+.fetch-btn{
+    background:linear-gradient(45deg,#00d2ff,#3a7bd5);
+    color:white;
+    margin:3px 0 10px;
+}
+.predict-btn{
+    background:linear-gradient(45deg,#00e676,#00c853);
+    color:#062b16;
+    margin-top:8px;
+}
+#weatherStatus{
+    display:none;
+    font-size:13px;
+    margin-bottom:12px;
+    padding:8px;
+    border-radius:8px;
+    color:white;
+    font-weight:bold;
+}
+.form-row{
+    display:flex;
+    gap:14px;
+}
+.input-group{
+    flex:1;
+}
+.input-center{
+    width:100%;
+}
+@media(max-width:800px){
+    .sidebar{
+        width:200px;
+    }
+    .page{
+        margin-left:200px;
+    }
+}
+@media(max-width:600px){
+    .sidebar{
+        width:65px;
+        padding:20px 8px;
+    }
+    .logo-text,
+    .menu-item span:last-child{
+        display:none;
+    }
+    .sidebar-logo{
+        justify-content:center;
+        padding:5px 0 30px;
+    }
+    .menu-item{
+        justify-content:center;
+        padding:13px 5px;
+    }
+    .sidebar-bottom{
+        left:8px;
+        right:8px;
+    }
+    .page{
+        margin-left:65px;
+        padding:25px 12px;
+    }
+    .card{
+        width:100%;
+    }
+    .form-row{
+        flex-direction:column;
+        gap:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">🌿</div>
+        <div class="logo-text">CropWise</div>
+    </div>
+    <nav class="sidebar-menu">
+        <a href="{{ url_for('dashboard') }}" class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+            <span>🏠</span><span>Dashboard</span>
+        </a>
+        <a href="{{ url_for('soil') }}" class="menu-item {% if active_page == 'soil' %}active{% endif %}">
+            <span>🧪</span><span>Soil & Climate</span>
+        </a>
+        <a href="#" class="menu-item {% if active_page == 'results' %}active{% endif %}">
+            <span>📊</span><span>Results</span>
+        </a>
+        <a href="{{ url_for('history') }}" class="menu-item {% if active_page == 'history' %}active{% endif %}">
+         <span>📜</span>
+        <span>History</span>
+        </a>
+        <a href="{{ url_for('profile') }}" class="menu-item {% if active_page == 'profile' %}active{% endif %}">
+           <span>👤</span>
+           <span>Profile</span>
+              </a>
+        <a href="#" class="menu-item">
+            <span>⚙️</span><span>Settings</span>
+        </a>
+    </nav>
+    <div class="sidebar-bottom">
+        <a href="{{ url_for('logout') }}" class="menu-item logout">
+            <span>🚪</span><span>Logout</span>
+        </a>
+    </div>
+</aside>
+
+<div class="lang-container">
+    <select id="languageSelect" class="lang-select">
+        <option value="en">English (English)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+    </select>
+</div>
+
+<div class="page">
+    <div class="card">
+        <h2 id="climateTitle">🌦️ Climate Details</h2>
+
+        <div>
+            <label id="cityLabel" for="cityName">City Name (Matched with Soil)</label>
+            <input type="text" id="cityName" class="locked-field" value="{{ locked_city }}" readonly required>
+
+            <label id="timeframeLabel">Weather Period</label>
+            <select id="weatherRange">
+                <option id="periodMonth" value="30" selected>Last 30 Days (1 Month)</option>
+                <option id="period15" value="15">Last 15 Days</option>
+                <option id="period1" value="1">Today (1 Day)</option>
+            </select>
+
+            <button type="button" id="autoDetectBtn" class="fetch-btn" onclick="fetchCityWeather()">
+                ⚡ Auto Detect Weather
+            </button>
+
+            <div id="weatherStatus"></div>
+        </div>
+
+        <form action="/predict" method="post" autocomplete="off">
+            <div class="form-row">
+                <div class="input-group">
+                    <label id="temp">Temperature (°C)</label>
+                    <input type="number" step="any" id="temperature" name="temperature" placeholder="Temperature" required autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label id="humidity">Humidity (%)</label>
+                    <input type="number" step="any" id="humidity_input" name="humidity" placeholder="Humidity" required autocomplete="off">
+                </div>
+            </div>
+
+            <div class="input-center">
+                <label id="rainfall">Rainfall (mm)</label>
+                <input type="number" step="any" id="rainfall_input" name="rainfall" placeholder="Rainfall" required autocomplete="off">
+            </div>
+
+            <button id="predictBtn" class="predict-btn" type="submit">Predict 🌾</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+<script>
+function applyLang(lang){
+    localStorage.setItem("lang",lang);
+    if(typeof translations==="undefined"||!translations[lang])return;
+    const t=translations[lang];
+    for(let key in t){
+        const el=document.getElementById(key);
+        if(el)el.innerText=t[key];
+    }
+}
+
+const savedLang=localStorage.getItem("lang")||"en";
+applyLang(savedLang);
+
+const select=document.getElementById("languageSelect");
+if(select){
+    select.value=savedLang;
+    select.addEventListener("change",e=>applyLang(e.target.value));
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+    const city=document.getElementById("cityName").value.trim();
+    if(city)fetchCityWeather();
+});
+
+async function fetchCityWeather(){
+    const city=document.getElementById("cityName").value.trim();
+    const range=document.getElementById("weatherRange").value;
+    const statusBox=document.getElementById("weatherStatus");
+
+    if(!city){
+        statusBox.style.display="block";
+        statusBox.style.background="rgba(255,165,0,.4)";
+        statusBox.innerText="⚠️ No locked city received from Soil page.";
+        return;
+    }
+
+    statusBox.style.display="block";
+    statusBox.style.background="rgba(0,150,255,.4)";
+    statusBox.innerText="⏳ Fetching weather data...";
+
+    try{
+        const response=await fetch("/get_weather_by_city",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({city:city,range:range})
+        });
+
+        const data=await response.json();
+
+        if(data.success){
+            document.getElementById("temperature").value=data.temperature??"";
+            document.getElementById("humidity_input").value=data.humidity??"";
+            document.getElementById("rainfall_input").value=data.rainfall??0;
+            statusBox.style.background="rgba(0,230,118,.4)";
+            statusBox.innerText=`✅ Weather loaded for ${data.city}, ${data.country}!`;
+        }else{
+            statusBox.style.background="rgba(255,75,75,.4)";
+            statusBox.innerText=`⚠️ ${data.message}`;
+        }
+    }catch(err){
+        statusBox.style.background="rgba(255,75,75,.4)";
+        statusBox.innerText="❌ Connection failed. Check network or type manually.";
+    }
+}
+</script>
+</body>
+</html>

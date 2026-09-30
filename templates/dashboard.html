@@ -1,0 +1,312 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>CropWise - Crop Recommendation</title> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"> 
+ 
+    <style> 
+        .language-setting{ 
+            padding:8px 12px 10px 25px; 
+        } 
+ 
+        .language-setting select{ 
+            width:100%; 
+            padding:9px 10px; 
+            border:1px solid #36f5a5; 
+            border-radius:9px; 
+            background:#123d2b; 
+            color:white; 
+            font-family:"Times New Roman",serif; 
+            font-size:14px; 
+            outline:none; 
+            cursor:pointer; 
+            box-shadow:0 0 8px rgba(54,245,165,.45); 
+        } 
+ 
+        .language-setting select:focus{ 
+            box-shadow:0 0 12px rgba(54,245,165,.75); 
+        } 
+ 
+        .language-setting select option{ 
+            background:#123d2b; 
+            color:white; 
+        } 
+    </style> 
+</head> 
+ 
+<body> 
+ 
+<div class="dashboard"> 
+ 
+    <aside class="sidebar"> 
+ 
+        <div class="logo"> 
+            <span>🌿</span> 
+            <h2>CropWise</h2> 
+        </div> 
+ 
+        <nav class="sidebar-menu"> 
+ 
+            <a href="{{ url_for('dashboard') }}" 
+               class="menu-item {% if active_page == 'dashboard' %}active{% endif %}"> 
+                <span>🏠</span> 
+                <span data-i18n="dashboard">Dashboard</span> 
+            </a> 
+ 
+            <a href="{{ url_for('soil') }}" 
+               class="menu-item {% if active_page == 'soil' %}active{% endif %}"> 
+                <span>🧪</span> 
+                <span data-i18n="soilClimate">Soil & Climate</span> 
+            </a> 
+ 
+            <a href="#" 
+               class="menu-item {% if active_page == 'results' %}active{% endif %}"> 
+                <span>📊</span> 
+                <span data-i18n="results">Results</span> 
+            </a> 
+ 
+            <a href="{{ url_for('history') }}" 
+               class="menu-item {% if active_page == 'history' %}active{% endif %}"> 
+                <span>📜</span> 
+                <span data-i18n="history">History</span> 
+            </a> 
+ 
+            <a href="#" 
+               class="menu-item {% if active_page == 'profile' %}active{% endif %}"> 
+                <span>👤</span> 
+                <span data-i18n="profile">Profile</span> 
+            </a> 
+ 
+            <a href="#" 
+               class="menu-item {% if active_page == 'settings' %}active{% endif %}"> 
+                <span>⚙️</span> 
+                <span data-i18n="settings">Settings</span> 
+            </a> 
+ 
+            <div class="language-setting"> 
+                <select id="dashboardLanguageSelect"> 
+                    <option value="en">🌐 English(English)</option> 
+                    <option value="hi">🌐 हिंदी(Hindi)</option> 
+                    <option value="te">🌐 తెలుగు(Telugu)</option> 
+                    <option value="ta">🌐 தமிழ்(Tamil)</option> 
+                    <option value="ml">🌐 മലയാളം(Malyalam)</option> 
+                    <option value="kn">🌐 ಕನ್ನಡ(Kannada)</option> 
+                </select> 
+            </div> 
+ 
+        </nav> 
+ 
+        <div class="sidebar-bottom"> 
+ 
+            <a href="{{ url_for('logout') }}" class="menu-item logout"> 
+                <span>🚪</span> 
+                <span data-i18n="logout">Logout</span> 
+            </a> 
+ 
+        </div> 
+ 
+    </aside> 
+ 
+    <main class="main-content"> 
+ 
+        <header class="topbar"> 
+ 
+            <div> 
+                <h1 data-i18n="CropRecommendationTitle">Crop Recommendation</h1> 
+                <p data-i18n="dashboardsubtitle">Smart farming starts here</p> 
+            </div> 
+ 
+            <div class="user-section"> 
+ 
+                <div class="notification">🔔</div> 
+ 
+                <div class="profile-icon">👤</div> 
+ 
+                <div class="profile-info"> 
+                    <div>User</div> 
+                    <span>Farmer</span> 
+                </div> 
+ 
+            </div> 
+ 
+        </header> 
+
+
+        <!-- ============================= -->
+        <!-- START ANALYSIS SECTION -->
+        <!-- ============================= -->
+
+        <section class="welcome-section"> 
+ 
+            <div class="analysis-card"> 
+ 
+                <div class="analysis-icon"> 
+                    🌱
+                </div> 
+ 
+                <div class="analysis-content"> 
+ 
+                    <h3 data-i18n="startAnalysis"> 
+                        Start Analysis 
+                    </h3> 
+ 
+                    <p data-i18n="startAnalysisText"> 
+                        Enter your soil and climate information.
+                    </p> 
+ 
+                    <a href="{{ url_for('soil') }}" 
+                       class="start-button" 
+                       data-i18n="startButton"> 
+                        🌱 Start Analysis 
+                    </a> 
+ 
+                </div> 
+ 
+            </div> 
+ 
+        </section> 
+
+
+        <!-- ============================= -->
+        <!-- PROJECT OVERVIEW SECTION -->
+        <!-- ============================= -->
+
+        <section class="overview-section"> 
+ 
+            <div class="section-heading"> 
+ 
+                <div> 
+ 
+                    <span data-i18n="systemOverview"> 
+                        PROJECT OVERVIEW 
+                    </span> 
+ 
+                    <h2 data-i18n="whatProvides"> 
+                        What CropWise Provides 
+                    </h2> 
+ 
+                </div> 
+ 
+            </div> 
+ 
+            <div class="overview-grid"> 
+
+
+                <!-- SOIL ANALYSIS -->
+
+                <div class="overview-card"> 
+ 
+                    <div class="card-icon soil-icon"> 
+                        🧪
+                    </div> 
+ 
+                    <h3 data-i18n="soilAnalysis"> 
+                        Soil Analysis 
+                    </h3> 
+ 
+                    <p data-i18n="soilAnalysisText"> 
+                        Analyze important soil conditions and 
+                        nutrient information required for crop selection. 
+                    </p> 
+ 
+                    <span class="card-link" 
+                          data-i18n="soilInformation"> 
+                        Soil Information → 
+                    </span> 
+ 
+                </div> 
+
+
+                <!-- CLIMATE ANALYSIS -->
+
+                <div class="overview-card"> 
+ 
+                    <div class="card-icon climate-icon"> 
+                        🌦️
+                    </div> 
+ 
+                    <h3 data-i18n="climateAnalysis"> 
+                        Climate Analysis 
+                    </h3> 
+ 
+                    <p data-i18n="climateAnalysisText"> 
+                        Use climate conditions such as temperature, 
+                        humidity and rainfall for better decisions. 
+                    </p> 
+ 
+                    <span class="card-link" 
+                          data-i18n="climateInformation"> 
+                        Climate Information → 
+                    </span> 
+ 
+                </div> 
+
+
+                <!-- CROP RECOMMENDATION -->
+
+                <div class="overview-card"> 
+ 
+                    <div class="card-icon crop-icon"> 
+                        🌾
+                    </div> 
+ 
+                    <h3 data-i18n="cropPrediction"> 
+                        Crop Recommendation 
+                    </h3> 
+ 
+                    <p data-i18n="cropPredictionText"> 
+                        Our machine learning model analyzes the 
+                        available conditions and recommends suitable crops. 
+                    </p> 
+ 
+                    <span class="card-link" 
+                          data-i18n="mlPrediction"> 
+                        Crop Recommendation → 
+                    </span> 
+ 
+                </div> 
+
+
+                
+ 
+                </div> 
+
+
+            </div> 
+ 
+        </section> 
+ 
+    </main> 
+ 
+</div> 
+ 
+<script src="{{ url_for('static', filename='js/lang.js') }}"></script> 
+ 
+<script> 
+document.addEventListener("DOMContentLoaded", function(){ 
+ 
+    const languageSelect = document.getElementById("dashboardLanguageSelect"); 
+ 
+    const savedLanguage = localStorage.getItem("lang") || "en"; 
+ 
+    languageSelect.value = savedLanguage; 
+ 
+    applyLanguage(savedLanguage); 
+ 
+    languageSelect.addEventListener("change", function(){ 
+ 
+        const selectedLanguage = this.value; 
+ 
+        applyLanguage(selectedLanguage); 
+ 
+        localStorage.setItem("lang", selectedLanguage); 
+ 
+    }); 
+ 
+}); 
+</script> 
+ 
+</body> 
+</html>

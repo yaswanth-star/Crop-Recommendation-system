@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soil Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-image: url("/static/bg.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .soil-page {
+            min-height: 100vh;
+            margin-left: 245px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 25px;
+        }
+
+        .lang-container {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 9999;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(0,255,120,0.4);
+        }
+
+        .lang-select {
+            background: #111827;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 38px 10px 16px;
+            border: 1px solid #10b981;
+            border-radius: 12px;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(16,185,129,0.7);
+        }
+
+        .lang-select option {
+            background: #1f2937;
+            color: white;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 440px;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 24px 28px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        }
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0 0 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .field-label {
+            display: block;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 42px;
+            background: rgba(240,243,246,0.9);
+            border: none;
+            border-radius: 12px;
+            padding: 0 14px;
+            font-size: 14px;
+            color: #222;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .input-box:focus {
+            background: white;
+            box-shadow: 0 0 0 2px #00b0ff;
+        }
+
+        .input-box.readonly {
+            background: rgba(255,255,255,0.7);
+            color: #111;
+            font-weight: 600;
+        }
+
+        .btn-detect {
+            width: 100%;
+            height: 44px;
+            background: linear-gradient(90deg,#00b0ff,#0081cb);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,176,255,0.4);
+            margin-bottom: 14px;
+        }
+
+        .btn-detect:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .btn-detect:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .section-separator {
+            border-top: 1px solid rgba(255,255,255,0.3);
+            margin: 8px 0 14px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 46px;
+            background: linear-gradient(90deg,#00e676,#00c853);
+            color: #05260c;
+            font-weight: 700;
+            font-size: 16px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0,230,118,0.4);
+            margin-top: 6px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0,230,118,0.6);
+        }
+
+        .status-text {
+            font-size: 12px;
+            text-align: center;
+            color: white;
+            min-height: 16px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+            .soil-page {
+                margin-left: 0;
+                padding: 90px 20px 30px;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">🌿</div>
+            <div class="logo-text">CropWise</div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="{{ url_for('dashboard') }}" class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('soil') }}" class="menu-item {% if active_page == 'soil' %}active{% endif %}">
+                <span>🧪</span>
+                <span>Soil & Climate</span>
+            </a>
+
+            <a href="#" class="menu-item {% if active_page == 'results' %}active{% endif %}">
+                <span>📊</span>
+                <span>Results</span>
+            </a>
+
+            <a href="{{ url_for('history') }}" class="menu-item {% if active_page == 'history' %}active{% endif %}">
+                <span>📜</span>
+                <span>History</span>
+            </a>
+
+            <a href="{{ url_for('profile') }}" class="menu-item {% if active_page == 'profile' %}active{% endif %}">
+                <span>👤</span>
+                <span>Profile</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span>⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('logout') }}" class="menu-item logout">
+                <span>🚪</span>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="soil-page">
+
+        <div class="lang-container">
+            <select id="languageSelect" class="lang-select">
+                <option value="en">English (English)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="ml">മലയാളം (Malayalam)</option>
+                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            </select>
+        </div>
+
+        <div class="card">
+            <h2 class="title" id="soilTitle">Soil Details</h2>
+
+            <label class="field-label" id="soilCityLabel">City Name</label>
+            <input type="text" id="cityName" class="input-box" placeholder="Enter city (e.g. Faridabad, Pune)" required>
+
+            <button type="button" class="btn-detect" id="btnAutoDetectSoil" onclick="fetchSoilData()">
+                ⚡ Auto Detect Soil Data
+            </button>
+
+            <div class="status-text" id="statusMsg"></div>
+
+            <form action="/climate" method="post" id="soilForm">
+
+                <input type="hidden" name="city" id="hiddenCity" value="">
+                <input type="hidden" name="latitude" id="latVal" value="17.3850">
+                <input type="hidden" name="longitude" id="lonVal" value="78.4867">
+
+                <div class="grid-2">
+
+                    <div>
+                        <label class="field-label" id="nitrogen">Nitrogen (g/kg)</label>
+                        <input type="number" step="any" name="nitrogen" id="nitrogenVal" class="input-box readonly" placeholder="Nitrogen" readonly required>
+                    </div>
+
+                    <div>
+                        <label class="field-label" id="ph">Soil pH</label>
+                        <input type="number" step="any" name="ph" id="phVal" class="input-box readonly" placeholder="pH" readonly required>
+                    </div>
+
+                </div>
+
+                <div class="grid-2">
+
+                    <div>
+                        <label class="field-label" id="clay">Clay Content (%)</label>
+                        <input type="number" step="any" name="clay" id="clayVal" class="input-box readonly" placeholder="Clay %" readonly required>
+                    </div>
+
+                    <div>
+                        <label class="field-label" id="organicCarbon">Organic Carbon (g/kg)</label>
+                        <input type="number" step="any" name="organic_carbon" id="socVal" class="input-box readonly" placeholder="SOC (g/kg)" readonly required>
+                    </div>
+
+                </div>
+
+                <div class="section-separator"></div>
+
+                <div class="grid-2">
+
+                    <div>
+                        <label class="field-label" id="phosphorus">Phosphorus (P)</label>
+                        <input type="number" step="any" name="P" id="pVal" class="input-box readonly" placeholder="P" readonly required>
+                    </div>
+
+                    <div>
+                        <label class="field-label" id="potassium">Potassium (K)</label>
+                        <input type="number" step="any" name="K" id="kVal" class="input-box readonly" placeholder="K" readonly required>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn-submit" id="next" onclick="return validateSoilPage()">Next ➜</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+
+    <script>
+
+        function applyLang(lang) {
+            localStorage.setItem("lang", lang);
+
+            if (typeof translations === "undefined" || !translations[lang]) return;
+
+            const t = translations[lang];
+
+            for (let key in t) {
+                const el = document.getElementById(key);
+                if (el) el.innerText = t[key];
+            }
+
+            const cityInput = document.getElementById("cityName");
+
+            if (cityInput && t.soilCityPlaceholder) {
+                cityInput.placeholder = t.soilCityPlaceholder;
+            }
+        }
+
+        const savedLang = localStorage.getItem("lang") || "en";
+        applyLang(savedLang);
+
+        const select = document.getElementById("languageSelect");
+
+        if (select) {
+            select.value = savedLang;
+
+            select.addEventListener("change", (e) => {
+                applyLang(e.target.value);
+            });
+        }
+
+        async function fetchSoilData() {
+
+            const city = document.getElementById("cityName").value.trim();
+            const status = document.getElementById("statusMsg");
+            const btn = document.getElementById("btnAutoDetectSoil");
+
+            const currentLang = localStorage.getItem("lang") || "en";
+
+            const t = typeof translations !== "undefined" && translations[currentLang]
+                ? translations[currentLang]
+                : null;
+
+            if (!city) {
+                status.innerText = "⚠️ Please enter a city name first.";
+                status.style.color = "#ffebee";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "⏳ Fetching Soil Details...";
+            status.innerText = "Connecting to ISRIC SoilGrids API...";
+            status.style.color = "#ffffff";
+
+            try {
+
+                const response = await fetch("/get_soil_by_city", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        city: city
+                    })
+                });
+
+                const res = await response.json();
+
+                if (res.success) {
+
+                    document.getElementById("hiddenCity").value = res.city;
+                    document.getElementById("cityName").value = res.city;
+                    document.getElementById("nitrogenVal").value = res.nitrogen;
+                    document.getElementById("phVal").value = res.ph;
+                    document.getElementById("clayVal").value = res.clay;
+                    document.getElementById("socVal").value = res.organic_carbon;
+                    document.getElementById("latVal").value = res.latitude;
+                    document.getElementById("lonVal").value = res.longitude;
+
+                    status.innerText = "⏳ Calculating phosphorus and potassium...";
+                    status.style.color = "#ffffff";
+
+                    const weatherResponse = await fetch("/get_weather_by_city", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            city: res.city,
+                            range: 30
+                        })
+                    });
+
+                    const weatherRes = await weatherResponse.json();
+
+                    if (weatherRes.success) {
+
+                        document.getElementById("pVal").value = weatherRes.phosphorus;
+                        document.getElementById("kVal").value = weatherRes.potassium;
+
+                        status.innerText = `✅ Found: ${res.city}, ${res.country}`;
+                        status.style.color = "#b9f6ca";
+
+                    } else {
+
+                        status.innerText = "❌ Unable to calculate P and K.";
+                        status.style.color = "#ff8a80";
+
+                    }
+                }
+
+            } finally {
+
+                btn.disabled = false;
+
+                btn.innerText = t && t.btnAutoDetectSoil
+                    ? t.btnAutoDetectSoil
+                    : "⚡ Auto Detect Soil Data";
+            }
+        }
+
+        function validateSoilPage() {
+    const city = document.getElementById("cityName");
+    const p = document.getElementById("pVal");
+    const k = document.getElementById("kVal");
+
+    if (!city.value.trim()) {
+        city.focus();
+        city.setCustomValidity("Please fill out this field.");
+        city.reportValidity();
+        city.setCustomValidity("");
+        return false;
+    }
+
+    if (!p.value.trim()) {
+        p.removeAttribute("readonly");
+        p.focus();
+        p.setCustomValidity("Please fill out this field.");
+        p.reportValidity();
+        p.setCustomValidity("");
+        p.setAttribute("readonly", "readonly");
+        return false;
+    }
+
+    if (!k.value.trim()) {
+        k.removeAttribute("readonly");
+        k.focus();
+        k.setCustomValidity("Please fill out this field.");
+        k.reportValidity();
+        k.setCustomValidity("");
+        k.setAttribute("readonly", "readonly");
+        return false;
+    }
+
+    return true;
+}
+
+    </script>
+
+</body>
+</html>

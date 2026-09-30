@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Result</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:
+    linear-gradient(rgba(10,45,25,.55),rgba(5,30,15,.65)),
+    url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6")
+    center/cover no-repeat fixed;
+    min-height:100vh;
+}
+
+.page{
+    min-height:100vh;
+    margin-left:245px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.card{
+    width:520px;
+    max-width:94%;
+    background:rgba(255,255,255,.97);
+    border-radius:18px;
+    padding:24px 28px;
+    text-align:center;
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+}
+
+h1{
+    margin:0;
+    color:#00b94f;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#777;
+    font-size:13px;
+    margin:5px 0 18px;
+}
+
+.main-result{
+    background:#effbf3;
+    border:1px solid #bde8ca;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:18px;
+}
+
+.crop-icon{
+    font-size:32px;
+}
+
+.main-crop{
+    font-size:26px;
+    font-weight:bold;
+    color:#087f3d;
+    text-transform:capitalize;
+    margin:3px 0 6px;
+}
+
+.suitable{
+    background:#00c853;
+    color:white;
+    padding:5px 13px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.confidence{
+    font-size:13px;
+    color:#555;
+    margin-top:8px;
+}
+
+.confidence strong{
+    color:#00a94f;
+}
+
+.section{
+    margin-top:16px;
+}
+
+.section-title{
+    font-size:16px;
+    font-weight:bold;
+    color:#222;
+    margin-bottom:9px;
+}
+
+.soil-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
+}
+
+.soil-box{
+    background:#f5f8f6;
+    border:1px solid #dfe9e2;
+    border-radius:9px;
+    padding:9px 4px;
+}
+
+.label{
+    font-size:10px;
+    font-weight:600;
+    margin-bottom:4px;
+}
+
+.nitrogen-label{
+    color:#3A7D44;
+}
+
+.phosphorus-label{
+    color:#D35400;
+}
+
+.potassium-label{
+    color:#8E24AA;
+}
+
+.ph-label{
+    color:#E58A00;
+}
+
+.value{
+    font-size:15px;
+    font-weight:bold;
+    color:#087f3d;
+}
+
+.climate-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+
+.climate-box{
+    background:#f5f8f6;
+    border:1px solid #dfe9e2;
+    border-radius:9px;
+    padding:9px 4px;
+}
+
+.icon{
+    font-size:18px;
+}
+
+.temperature-label{
+    color:#E53935;
+}
+
+.humidity-label{
+    color:#247BA0;
+}
+
+.rainfall-label{
+    color:#1769E0;
+}
+
+.climate-value{
+    font-size:14px;
+    font-weight:bold;
+    color:#087f3d;
+    margin-top:3px;
+}
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+}
+
+.result-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 12px;
+    background:#f5f8f6;
+    border:1px solid #dfe9e2;
+    border-radius:9px;
+}
+
+.crop-name{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    font-weight:bold;
+    color:#333;
+    text-transform:capitalize;
+}
+
+.other-crop-icon{
+    font-size:20px;
+}
+
+.crop-conf{
+    font-size:13px;
+    font-weight:bold;
+    color:#00a94f;
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+}
+
+.btn{
+    text-decoration:none;
+    padding:9px 17px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.change-btn{
+    background:#00c853;
+    color:white;
+}
+
+.home-btn{
+    background:#edf3ee;
+    color:#087f3d;
+}
+
+@media(max-width:900px){
+    .page{
+        margin-left:0;
+        padding:80px 20px 30px;
+    }
+}
+
+@media(max-width:500px){
+    .card{
+        padding:20px 15px;
+    }
+
+    h1{
+        font-size:26px;
+    }
+
+    .soil-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .climate-grid{
+        grid-template-columns:1fr;
+    }
+
+    .results{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <div class="logo-icon">🌿</div>
+        <div class="logo-text">CropWise</div>
+    </div>
+
+    <nav class="sidebar-menu">
+
+        <a href="{{ url_for('dashboard') }}"
+           class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+            <span>🏠</span>
+            <span data-i18n="dashboard">Dashboard</span>
+        </a>
+
+        <a href="{{ url_for('soil') }}"
+           class="menu-item {% if active_page == 'soil' %}active{% endif %}">
+            <span>🧪</span>
+            <span data-i18n="soilClimate">Soil & Climate</span>
+        </a>
+
+        <a href="#"
+           class="menu-item {% if active_page == 'results' %}active{% endif %}">
+            <span>📊</span>
+            <span data-i18n="results">Results</span>
+        </a>
+
+        <a href="{{ url_for('history') }}"
+           class="menu-item {% if active_page == 'history' %}active{% endif %}">
+            <span>📜</span>
+            <span data-i18n="history">History</span>
+        </a>
+
+        <a href="#"
+           class="menu-item {% if active_page == 'profile' %}active{% endif %}">
+            <span>👤</span>
+            <span data-i18n="profile">Profile</span>
+        </a>
+
+        <a href="#"
+           class="menu-item">
+            <span>⚙️</span>
+            <span data-i18n="settings">Settings</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <a href="{{ url_for('logout') }}" class="menu-item logout">
+            <span>🚪</span>
+            <span data-i18n="logout">Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+<div class="page">
+
+<div class="card">
+
+<h1 data-i18n="resultTitle">🌱 Recommendation Result</h1>
+
+<div class="subtitle">
+Smart analysis based on your soil and climate
+</div>
+
+{% if top3 %}
+
+<div class="main-result">
+
+    <div class="crop-icon">
+        <span id="mainCropIcon" data-crop="{{ top3[0][0] }}">🌱</span>
+    </div>
+
+    <div class="main-crop">
+        {{ top3[0][0] }}
+    </div>
+
+    <span class="suitable">
+        Highly Suitable
+    </span>
+
+    <div class="confidence">
+        Model Confidence:
+        <strong>{{ top3[0][1] }}%</strong>
+    </div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
+🧪 Soil Conditions
+</div>
+
+<div class="soil-grid">
+
+<div class="soil-box">
+<div class="label nitrogen-label">Nitrogen</div>
+<div class="value">
+{{ soil_data.N if soil_data else '--' }}
+</div>
+</div>
+
+<div class="soil-box">
+<div class="label phosphorus-label">Phosphorus</div>
+<div class="value">
+{{ soil_data.P if soil_data else '--' }}
+</div>
+</div>
+
+<div class="soil-box">
+<div class="label potassium-label">Potassium</div>
+<div class="value">
+{{ soil_data.K if soil_data else '--' }}
+</div>
+</div>
+
+<div class="soil-box">
+<div class="label ph-label">pH</div>
+<div class="value">
+{{ soil_data.ph if soil_data else '--' }}
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+
+<div class="section-title">
+🌦️ Climate Conditions
+</div>
+
+<div class="climate-grid">
+
+<div class="climate-box">
+<div class="icon">🌡️</div>
+<div class="label temperature-label">Temperature</div>
+<div class="climate-value">
+{{ soil_data.temperature if soil_data else '--' }}°C
+</div>
+</div>
+
+<div class="climate-box">
+<div class="icon">💧</div>
+<div class="label humidity-label">Humidity</div>
+<div class="climate-value">
+{{ soil_data.humidity if soil_data else '--' }}%
+</div>
+</div>
+
+<div class="climate-box">
+<div class="icon">🌧️</div>
+<div class="label rainfall-label">Rainfall</div>
+<div class="climate-value">
+{{ soil_data.rainfall if soil_data else '--' }} mm
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+
+<div class="section-title">
+🌾 Other Suitable Crops
+</div>
+
+<div class="results">
+
+{% for item in top3[1:3] %}
+
+<div class="result-box">
+
+<span class="crop-name">
+
+<span class="other-crop-icon"
+      data-crop="{{ item[0] }}">🌱</span>
+
+{{ item[0] }}
+
+</span>
+
+<span class="crop-conf">
+{{ item[1] }}%
+</span>
+
+</div>
+
+{% endfor %}
+
+</div>
+</div>
+
+{% endif %}
+
+<div class="buttons">
+
+<a href="/soil" class="btn change-btn">
+🔄 Change Inputs
+</a>
+
+<a href="{{ url_for('dashboard') }}" class="btn home-btn">
+    🏠 Home
+</a>
+
+</div>
+
+</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+
+<script>
+function getCropIcon(crop){
+
+    crop = crop.toLowerCase().trim();
+
+    const cropIcons = {
+        rice:"🌾",
+        wheat:"🌾",
+        maize:"🌽",
+        corn:"🌽",
+        mango:"🥭",
+        coffee:"☕",
+        banana:"🍌",
+        apple:"🍎",
+        grapes:"🍇",
+        watermelon:"🍉",
+        coconut:"🥥",
+        orange:"🍊",
+        papaya:"🍈",
+        pomegranate:"🍎",
+        muskmelon:"🍈",
+        chickpea:"🫘",
+        lentil:"🫘",
+        kidneybeans:"🫘",
+        beans:"🫘",
+        pigeonpeas:"🌱",
+        mothbeans:"🌱",
+        mungbean:"🌱",
+        blackgram:"🌱",
+        cotton:"🌿",
+        jute:"🌿"
+    };
+
+    return cropIcons[crop] || "🌱";
+}
+
+const mainCropIcon = document.getElementById("mainCropIcon");
+
+if(mainCropIcon){
+    mainCropIcon.textContent =
+        getCropIcon(mainCropIcon.getAttribute("data-crop"));
+}
+
+document.querySelectorAll(".other-crop-icon").forEach(function(icon){
+
+    icon.textContent =
+        getCropIcon(icon.getAttribute("data-crop"));
+
+});
+</script>
+
+</body>
+</html>

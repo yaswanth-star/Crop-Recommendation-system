@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crop Recommendation System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/login.css') }}">
+
+</head>
+
+<body>
+
+    <div class="background">
+
+        <div class="login-card">
+
+            <div class="logo">
+                🌱
+            </div>
+
+            <div class="title">
+    <h1>Crop Recommendation</h1>
+    <h2>System</h2>
+</div>
+
+            <p class="subtitle">
+                Login to continue
+            </p>
+
+
+            <form action="/login" method="POST">
+
+                <label>Email</label>
+
+                <div class="input-container">
+
+                    <span class="icon">✉</span>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your Gmail address"
+                        pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+                        title="Please enter a valid Gmail address ending with @gmail.com"
+                        required>
+
+                </div>
+
+
+                <label>Password</label>
+
+                <div class="input-container">
+
+                    <span class="icon">🔒</span>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required>
+
+                </div>
+
+
+                <button type="submit">
+                    LOGIN
+                </button>
+
+            </form>
+
+
+            <p class="signup">
+
+                Don't have an account?
+
+                <a href="#">
+                    Sign Up
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

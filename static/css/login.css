@@ -1,0 +1,410 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+
+/* ==============================
+   FULL SCREEN BACKGROUND
+   ============================== */
+
+.background {
+    width: 100%;
+    height: 100vh;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.05)
+        ),
+        url("../image/farm.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+}
+
+
+/* ==============================
+   LOGIN CARD
+   ============================== */
+
+.login-card {
+    width: 450px;
+    max-width: 90%;
+    height: 88vh;
+
+    padding: 25px 42px;
+
+    background: rgba(255, 255, 255, 0.38);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.20);
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* ==============================
+   LOGO
+   ============================== */
+
+.logo {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 12px;
+
+    border-radius: 50%;
+
+    background: rgba(235, 247, 237, 0.80);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+
+/* ==============================
+   TITLE
+   ============================== */
+
+.login-card h1 {
+    color: #116b28;
+
+    font-size: 36px;
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    margin-bottom: 3px;
+
+    text-shadow:
+        0 2px 4px rgba(0, 70, 20, 0.12);
+}
+
+.login-card h2 {
+    color: #238238;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    margin-bottom: 8px;
+
+    text-shadow:
+        0 2px 4px rgba(0, 70, 20, 0.10);
+}
+
+
+/* ==============================
+   SUBTITLE
+   ============================== */
+
+.subtitle {
+    color: #444;
+
+    font-size: 17px;
+
+    margin-bottom: 25px;
+}
+
+
+/* ==============================
+   FORM
+   ============================== */
+
+form {
+    width: 100%;
+    text-align: left;
+}
+
+
+/* ==============================
+   LABELS
+   ============================== */
+
+form label {
+    display: block;
+
+    color: #222;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+
+/* ==============================
+   INPUT BOX
+   ============================== */
+
+.input-container {
+    width: 100%;
+    height: 50px;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 14px;
+
+    margin-bottom: 18px;
+
+    transition: 0.3s;
+}
+
+.input-container:focus-within {
+    background: rgba(255, 255, 255, 0.72);
+
+    border-color: #2e8b3c;
+
+    box-shadow:
+        0 0 0 3px rgba(46, 139, 60, 0.12);
+}
+
+
+/* ==============================
+   INPUT ICON
+   ============================== */
+
+.icon {
+    font-size: 18px;
+
+    margin-right: 10px;
+}
+
+
+/* ==============================
+   INPUT FIELD
+   ============================== */
+
+.input-container input {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 16px;
+
+    color: #222;
+}
+
+.input-container input::placeholder {
+    color: #666;
+}
+
+
+/* ==============================
+   LOGIN BUTTON
+   ============================== */
+
+button {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #238b35,
+            #36a247
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 2px;
+
+    box-shadow:
+        0 6px 15px rgba(35, 139, 53, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #1d762d,
+            #2e8f3d
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(35, 139, 53, 0.35);
+}
+
+
+/* ==============================
+   SIGN UP
+   ============================== */
+
+.signup {
+    margin-top: 18px;
+
+    color: #444;
+
+    font-size: 14px;
+}
+
+.signup a {
+    color: #157528;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==============================
+   SMALL SCREEN
+   ============================== */
+
+@media (max-width: 700px) {
+
+    .background {
+        padding: 10px;
+    }
+
+    .login-card {
+        width: 92%;
+        max-width: 450px;
+
+        height: 94vh;
+
+        padding: 22px 28px;
+    }
+
+    .login-card h1 {
+        font-size: 29px;
+    }
+
+    .login-card h2 {
+        font-size: 26px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    form label {
+        font-size: 14px;
+    }
+
+    .input-container {
+        height: 46px;
+        margin-bottom: 15px;
+    }
+
+    button {
+        height: 46px;
+    }
+}
+
+
+/* ==============================
+   SHORT SCREEN
+   ============================== */
+
+@media (max-height: 700px) {
+
+    .login-card {
+        height: 94vh;
+
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .logo {
+        width: 52px;
+        height: 52px;
+
+        font-size: 27px;
+
+        margin-bottom: 7px;
+    }
+
+    .login-card h1 {
+        font-size: 29px;
+    }
+
+    .login-card h2 {
+        font-size: 26px;
+    }
+
+    .subtitle {
+        margin-bottom: 16px;
+    }
+
+    .input-container {
+        height: 43px;
+        margin-bottom: 12px;
+    }
+
+    button {
+        height: 43px;
+    }
+
+    .signup {
+        margin-top: 12px;
+    }
+}

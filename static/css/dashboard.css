@@ -1,0 +1,547 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Times New Roman", serif;
+    background:
+        radial-gradient(circle at 12% 25%, rgba(166, 215, 165, 0.45), transparent 28%),
+        radial-gradient(circle at 88% 40%, rgba(145, 205, 150, 0.30), transparent 32%),
+        radial-gradient(circle at 50% 90%, rgba(190, 225, 185, 0.35), transparent 35%),
+        linear-gradient(135deg, #f8fbf7 0%, #edf7ec 50%, #e2f0e1 100%);
+    color: #26352a;
+    min-height: 100vh;
+}
+
+.dashboard {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 245px;
+    min-height: 100vh;
+    background: #173d2b;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 18px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 35px;
+}
+
+.logo span {
+    font-size: 30px;
+}
+
+.logo h2 {
+    font-size: 25px;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #dce9df;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 15px;
+    border-radius: 9px;
+    font-size: 17px;
+    transition: 0.25s;
+}
+
+.menu-item:hover {
+    background: #28563f;
+    color: white;
+}
+
+.menu-item.active {
+    background: #5c9b68;
+    color: white;
+}
+
+.menu-item span:first-child {
+    width: 25px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.logout {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    padding-top: 20px;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    background: transparent;
+    min-height: 100vh;
+    position: relative;
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    padding: 30px 38px 60px;
+    overflow: hidden;
+}
+
+/* =========================
+   NATURE BACKGROUND
+========================= */
+
+.main-content::before {
+    content: "";
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: -80px;
+    height: 300px;
+    background:
+        radial-gradient(ellipse at 15% 100%, rgba(117, 183, 116, 0.45), transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(145, 202, 135, 0.38), transparent 60%),
+        radial-gradient(ellipse at 85% 100%, rgba(108, 178, 110, 0.42), transparent 55%);
+    border-radius: 50% 50% 0 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.main-content::after {
+    content: "";
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: -120px;
+    height: 190px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 50% 50% 0 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    position: relative;
+    z-index: 2;
+}
+
+.topbar h1 {
+    font-size: 38px;
+    color: #193f2b;
+    letter-spacing: 0.3px;
+}
+
+.topbar p {
+    margin-top: 5px;
+    color: #718078;
+    font-size: 18px;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.notification {
+    font-size: 21px;
+}
+
+.profile-icon {
+    width: 48px;
+    height: 48px;
+    background: #dcebdc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+}
+
+.profile-info strong {
+    display: block;
+    font-size: 16px;
+}
+
+.profile-info small {
+    display: block;
+    color: #7b887f;
+    margin-top: 2px;
+}
+
+/* =========================
+   WELCOME / START ANALYSIS
+========================= */
+
+.welcome-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 55px;
+    position: relative;
+    z-index: 2;
+}
+
+.welcome-text {
+    display: contents;
+}
+
+/* =========================
+   ANALYSIS CARD
+========================= */
+
+.analysis-card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 28px;
+    padding: 38px 45px;
+    width: 50%;
+    max-width: 620px;
+    min-height: 310px;
+    margin: 0 auto;
+    box-shadow: 0 18px 45px rgba(30, 80, 50, 0.14);
+    border: 1px solid rgba(190, 225, 195, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.analysis-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(30, 80, 50, 0.18);
+}
+
+/* =========================
+   ANALYSIS ICON
+========================= */
+
+.analysis-icon {
+    width: 90px;
+    height: 90px;
+    background: #e3f1e4;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    margin: 0 auto 22px;
+    box-shadow: 0 8px 20px rgba(50, 120, 70, 0.08);
+}
+
+/* =========================
+   ANALYSIS CONTENT
+========================= */
+
+.analysis-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.analysis-content h3 {
+    font-size: 34px;
+    color: #123f2d;
+    margin: 0 0 13px;
+}
+
+.analysis-content p {
+    color: #68766d;
+    line-height: 1.5;
+    font-size: 18px;
+    margin: 0 0 25px;
+    max-width: 520px;
+}
+
+/* =========================
+   START BUTTON
+========================= */
+
+.start-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 245px;
+    padding: 15px 28px;
+    background: linear-gradient(135deg, #438f56, #2f7444);
+    color: white;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(50, 120, 70, 0.28);
+    transition: all 0.3s ease;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(50, 120, 70, 0.35);
+    background: linear-gradient(135deg, #4b955c, #347b48);
+}
+
+/* =========================
+   PROJECT OVERVIEW
+========================= */
+
+.overview-section {
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.section-heading {
+    margin-bottom: 22px;
+}
+
+.section-heading span {
+    color: #5b8961;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.8px;
+}
+
+.section-heading h2 {
+    color: #193f2b;
+    font-size: 30px;
+    margin-top: 7px;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.overview-card {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid #e4ebe5;
+    border-radius: 18px;
+    padding: 27px;
+    min-height: 220px;
+    box-shadow: 0 7px 22px rgba(30, 60, 40, 0.06);
+    transition: 0.25s;
+}
+
+.overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(30, 60, 40, 0.10);
+}
+
+.card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    margin-bottom: 17px;
+}
+
+.soil-icon {
+    background: #eee5d8;
+}
+
+.climate-icon {
+    background: #e1edf0;
+}
+
+.crop-icon {
+    background: #e3efdf;
+}
+
+.overview-card h3 {
+    color: #234832;
+    font-size: 21px;
+    margin-bottom: 9px;
+}
+
+.overview-card p {
+    color: #6d786f;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 15px;
+}
+
+.card-link {
+    color: #4d8257;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* =========================
+   CONTENT ABOVE BACKGROUND
+========================= */
+
+.topbar,
+.welcome-section,
+.overview-section {
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 210px;
+    }
+
+    .main-content {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+        padding: 25px;
+    }
+
+    .welcome-section {
+        display: flex;
+        justify-content: center;
+    }
+
+    .analysis-card {
+        width: 75%;
+        max-width: 620px;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .sidebar {
+        width: 70px;
+        padding: 20px 10px;
+    }
+
+    .logo h2,
+    .menu-item span:last-child {
+        display: none;
+    }
+
+    .logo {
+        justify-content: center;
+        padding: 5px 0 30px;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 13px 5px;
+    }
+
+    .menu-item span:first-child {
+        font-size: 20px;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 20px;
+    }
+
+    .topbar {
+        margin-bottom: 25px;
+    }
+
+    .topbar h1 {
+        font-size: 27px;
+    }
+
+    .topbar p {
+        font-size: 15px;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .welcome-text {
+        display: contents;
+    }
+
+    .analysis-card {
+        width: 95%;
+        padding: 35px 25px;
+        min-height: 330px;
+    }
+
+    .analysis-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+    }
+
+    .analysis-content h3 {
+        font-size: 30px;
+    }
+
+    .analysis-content p {
+        font-size: 17px;
+    }
+
+    .start-button {
+        min-width: 220px;
+        font-size: 17px;
+    }
+
+    .section-heading h2 {
+        font-size: 25px;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+}

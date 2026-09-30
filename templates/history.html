@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CropWise History</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    background:url('/static/bg.jpg') center/cover no-repeat fixed
+}
+
+.page{
+    min-height:100vh;
+    margin-left:245px;
+    padding:40px 30px
+}
+
+.history-container{
+    max-width:1000px;
+    margin:auto
+}
+
+.header{
+    color:white;
+    margin-bottom:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start
+}
+
+.header h1{
+    margin:0 0 7px;
+    font-size:30px
+}
+
+.header p{
+    margin:0;
+    color:#dcebe4
+}
+
+.language-box{
+    display:flex;
+    align-items:center;
+    gap:8px
+}
+
+.language-box span{
+    font-size:20px
+}
+
+.language-box select{
+    padding:9px 12px;
+    border:1px solid #d5ddd8;
+    border-radius:8px;
+    background:white;
+    color:#26352e;
+    font-size:14px;
+    cursor:pointer;
+    outline:none
+}
+
+.history-card{
+    background:rgba(255,255,255,.95);
+    border-radius:16px;
+    padding:18px 20px;
+    margin-bottom:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.2)
+}
+
+.history-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px
+}
+
+.crop-name{
+    font-size:22px;
+    font-weight:bold;
+    color:#087f3d;
+    text-transform:capitalize
+}
+
+.crop-icon{
+    display:inline-block;
+    margin-right:8px;
+    font-size:24px;
+}
+
+.confidence{
+    background:#dff7e9;
+    color:#087f3d;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px
+}
+
+.detail{
+    background:#f4f7f5;
+    padding:10px;
+    border-radius:8px
+}
+
+.detail span{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:5px
+}
+
+.detail:nth-child(1) span{
+    color:#1677D2;
+}
+
+.detail:nth-child(2) span{
+    color:#087F3D;
+}
+
+.detail:nth-child(3) span{
+    color:#D35400;
+}
+
+.detail:nth-child(4) span{
+    color:#8E24AA;
+}
+
+.detail:nth-child(5) span{
+    color:#E58A00;
+}
+
+.detail:nth-child(6) span{
+    color:#E53935;
+}
+
+.detail:nth-child(7) span{
+    color:#1683C8;
+}
+
+.detail:nth-child(8) span{
+    color:#1769E0;
+}
+
+.detail strong{
+    color:#26352e;
+    font-size:14px
+}
+
+.date{
+    margin-top:12px;
+    font-size:12px;
+    color:#718078
+}
+
+.empty{
+    background:rgba(255,255,255,.95);
+    border-radius:16px;
+    padding:45px 20px;
+    text-align:center;
+    color:#52635a
+}
+
+@media(max-width:800px){
+    .page{
+        margin-left:200px
+    }
+
+    .details{
+        grid-template-columns:repeat(2,1fr)
+    }
+}
+
+@media(max-width:600px){
+    .page{
+        margin-left:65px;
+        padding:25px 12px
+    }
+
+    .header{
+        display:block
+    }
+
+    .language-box{
+        margin-top:15px
+    }
+
+    .details{
+        grid-template-columns:repeat(2,1fr)
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+    <div class="logo-icon">🌿</div>
+    <div class="logo-text">CropWise</div>
+</div>
+
+<nav class="sidebar-menu">
+
+<a href="{{ url_for('dashboard') }}" class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+    <span>🏠</span>
+    <span data-i18n="dashboard">Dashboard</span>
+</a>
+
+<a href="{{ url_for('soil') }}" class="menu-item {% if active_page == 'soil' %}active{% endif %}">
+    <span>🧪</span>
+    <span data-i18n="soilClimate">Soil & Climate</span>
+</a>
+
+<a href="#" class="menu-item {% if active_page == 'results' %}active{% endif %}">
+    <span>📊</span>
+    <span data-i18n="results">Results</span>
+</a>
+
+<a href="{{ url_for('history') }}" class="menu-item {% if active_page == 'history' %}active{% endif %}">
+    <span>📜</span>
+    <span data-i18n="history">History</span>
+</a>
+
+<a href="{{ url_for('profile') }}" class="menu-item {% if active_page == 'profile' %}active{% endif %}">
+    <span>👤</span>
+    <span data-i18n="profile">Profile</span>
+</a>
+
+<a href="#" class="menu-item">
+    <span>⚙️</span>
+    <span data-i18n="settings">Settings</span>
+</a>
+
+</nav>
+
+<div class="sidebar-bottom">
+
+<a href="{{ url_for('logout') }}" class="menu-item logout">
+    <span>🚪</span>
+    <span data-i18n="logout">Logout</span>
+</a>
+
+</div>
+
+</aside>
+
+<div class="page">
+
+<div class="history-container">
+
+<div class="header">
+
+<div>
+    <h1>
+        📜
+        <span data-i18n="historyTitle">Prediction History</span>
+    </h1>
+
+    <p data-i18n="historySubtitle">
+        Your previous crop recommendations
+    </p>
+</div>
+
+<div class="language-box">
+    <span>🌐</span>
+
+    <select id="languageSelect">
+        <option value="en">English (English)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+    </select>
+</div>
+
+</div>
+
+{% if records %}
+
+{% for item in records %}
+
+<div class="history-card">
+
+<div class="history-top">
+
+<div class="crop-name">
+    <span class="crop-icon" data-crop="{{ item.crop }}"></span>
+    {{ item.crop }}
+</div>
+
+<div class="confidence">
+    {{ item.confidence }}%
+</div>
+
+</div>
+
+<div class="details">
+
+<div class="detail">
+    <span data-i18n="city">City</span>
+    <strong>{{ item.city or '--' }}</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="nitrogenHistory">Nitrogen</span>
+    <strong>{{ item.nitrogen }}</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="phosphorusHistory">Phosphorus</span>
+    <strong>{{ item.phosphorus }}</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="potassiumHistory">Potassium</span>
+    <strong>{{ item.potassium }}</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="phHistory">pH</span>
+    <strong>{{ item.ph }}</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="temperatureHistory">Temperature</span>
+    <strong>{{ item.temperature }}°C</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="humidityHistory">Humidity</span>
+    <strong>{{ item.humidity }}%</strong>
+</div>
+
+<div class="detail">
+    <span data-i18n="rainfallHistory">Rainfall</span>
+    <strong>{{ item.rainfall }} mm</strong>
+</div>
+
+</div>
+
+<div class="date">
+    🕒 {{ item.created_at }}
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty">
+
+<h2>
+    📜
+    <span data-i18n="noHistory">No History Yet</span>
+</h2>
+
+<p data-i18n="noHistoryText">
+    Your crop predictions will appear here after you make a prediction.
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const languageSelect = document.getElementById("languageSelect");
+
+    const savedLang = localStorage.getItem("lang") || "en";
+
+    if(languageSelect){
+        languageSelect.value = savedLang;
+
+        languageSelect.addEventListener("change", function(){
+            const selectedLang = this.value;
+
+            localStorage.setItem("lang", selectedLang);
+
+            if(typeof applyLang === "function"){
+                applyLang(selectedLang);
+            }
+
+            if(typeof applyLanguage === "function"){
+                applyLanguage(selectedLang);
+            }
+        });
+    }
+
+    if(typeof applyLang === "function"){
+        applyLang(savedLang);
+    }
+
+    if(typeof applyLanguage === "function"){
+        applyLanguage(savedLang);
+    }
+
+});
+</script>
+
+<script>
+document.querySelectorAll(".crop-icon").forEach(function(icon){
+
+    const crop = icon.getAttribute("data-crop").toLowerCase().trim();
+
+    const cropIcons = {
+        rice: "🌾",
+        wheat: "🌾",
+        maize: "🌽",
+        corn: "🌽",
+        mango: "🥭",
+        coffee: "☕",
+        banana: "🍌",
+        apple: "🍎",
+        grapes: "🍇",
+        watermelon: "🍉",
+        coconut: "🥥",
+        orange: "🍊",
+        papaya: "🍈",
+        pomegranate: "🍎",
+        muskmelon: "🍈",
+        chickpea: "🫘",
+        lentil: "🫘",
+        kidneybeans: "🫘",
+        beans: "🫘",
+        pigeonpeas: "🌱",
+        mothbeans: "🌱",
+        mungbean: "🌱",
+        blackgram: "🌱",
+        cotton: "🌿",
+        jute: "🌿"
+    };
+
+    icon.textContent = cropIcons[crop] || "🌱";
+
+});
+</script>
+
+</body>
+</html>
