@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,session,jsonify,redirect
+from flask import Flask,render_template,request, send_from_directory,session,jsonify,redirect
 import sqlite3
 from datetime import datetime
 import pickle
@@ -21,9 +21,11 @@ else:
 
 app=Flask(__name__)
 app.secret_key="secret"
+@app.route('/google7a7ee97cd0d9faaa.html')
+def google_verification():
+    return send_from_directory('.', 'google7a7ee97cd0d9faaa.html')
 
 def init_db():
-    def init_db():
      if not os.environ.get("VERCEL"):
         conn = sqlite3.connect(DB_PATH)
 
