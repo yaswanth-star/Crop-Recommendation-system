@@ -7,12 +7,23 @@ import numpy as np
 import pandas as pd
 import webbrowser
 import requests
+import os
+import shutil
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if os.environ.get("VERCEL"):
+    DB_PATH = "/tmp/cropwise.db"
+    if not os.path.exists(DB_PATH):
+        shutil.copyfile(os.path.join(BASE_DIR, "cropwise.db"), DB_PATH)
+else:
+    DB_PATH = os.path.join(BASE_DIR, "cropwise.db")
 
 app=Flask(__name__)
 app.secret_key="secret"
 
 def init_db():
-    conn=sqlite3.connect("cropwise.db")
+    conn=sqlite3.connect(DB_PATH)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS history(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
