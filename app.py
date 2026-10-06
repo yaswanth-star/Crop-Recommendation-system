@@ -23,26 +23,31 @@ app=Flask(__name__)
 app.secret_key="secret"
 
 def init_db():
-    conn=sqlite3.connect(DB_PATH)
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS history(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL,
-            crop TEXT NOT NULL,
-            confidence REAL NOT NULL,
-            nitrogen REAL,
-            phosphorus REAL,
-            potassium REAL,
-            ph REAL,
-            temperature REAL,
-            humidity REAL,
-            rainfall REAL,
-            city TEXT,
-            created_at TEXT NOT NULL
-        )
-    """)
-    conn.commit()
-    conn.close()
+    def init_db():
+     if not os.environ.get("VERCEL"):
+        conn = sqlite3.connect(DB_PATH)
+
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS history(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT,
+                crop TEXT,
+                confidence REAL,
+                nitrogen REAL,
+                phosphorus REAL,
+                potassium REAL,
+                ph REAL,
+                temperature REAL,
+                humidity REAL,
+                rainfall REAL,
+                city TEXT,
+                created_at TEXT
+            )
+        """)
+
+        conn.commit()
+        conn.close()
+
 
 init_db()
 
@@ -382,7 +387,7 @@ def predict():
         (classes[i],round(probs[i]*100,2))
         for i in idx
     ]
-    conn=sqlite3.connect("cropwise.db")
+    conn=sqlite3.connect(DB_PATH)
     conn.execute("""
         INSERT INTO history(
             email,
