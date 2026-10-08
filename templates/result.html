@@ -239,32 +239,209 @@ h1{
     color:#087f3d;
 }
 
-@media(max-width:900px){
-    .page{
-        margin-left:0;
-        padding:80px 20px 30px;
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+    /* Hide desktop sidebar on smaller screens */
+    .sidebar {
+        display: none !important;
+    }
+
+    .page {
+        margin-left: 0 !important;
+        width: 100%;
+        min-height: 100vh;
+        padding: 80px 20px 30px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 520px;
     }
 }
 
-@media(max-width:500px){
-    .card{
-        padding:20px 15px;
+
+/* ============================= */
+/* MOBILE PHONE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
+        background-attachment: scroll;
     }
 
-    h1{
-        font-size:26px;
+    .page {
+        margin-left: 0 !important;
+        padding: 25px 10px;
+        align-items: flex-start;
     }
 
-    .soil-grid{
-        grid-template-columns:repeat(2,1fr);
+    .card {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px;
+        border-radius: 16px;
     }
 
-    .climate-grid{
-        grid-template-columns:1fr;
+    h1 {
+        font-size: 24px;
+        line-height: 30px;
     }
 
-    .results{
-        grid-template-columns:1fr;
+    .subtitle {
+        font-size: 12px;
+        line-height: 17px;
+        margin-bottom: 15px;
+    }
+
+    .main-result {
+        padding: 14px 10px;
+        margin-bottom: 15px;
+    }
+
+    .crop-icon {
+        font-size: 30px;
+    }
+
+    .main-crop {
+        font-size: 23px;
+    }
+
+    .confidence {
+        font-size: 12px;
+    }
+
+    .section {
+        margin-top: 14px;
+    }
+
+    .section-title {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    /* Soil values: 2 columns on phone */
+    .soil-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .soil-box {
+        padding: 9px 4px;
+    }
+
+    .label {
+        font-size: 9px;
+    }
+
+    .value {
+        font-size: 14px;
+    }
+
+    /* Climate: 3 columns still fit */
+    .climate-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+
+    .climate-box {
+        padding: 8px 3px;
+    }
+
+    .icon {
+        font-size: 17px;
+    }
+
+    .climate-value {
+        font-size: 12px;
+    }
+
+    .temperature-label,
+    .humidity-label,
+    .rainfall-label {
+        font-size: 8px;
+    }
+
+    /* Other crops: one per row */
+    .results {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .result-box {
+        padding: 10px;
+    }
+
+    .crop-name {
+        font-size: 12px;
+    }
+
+    .crop-conf {
+        font-size: 12px;
+    }
+
+    .other-crop-icon {
+        font-size: 18px;
+    }
+
+    /* Buttons */
+    .buttons {
+        margin-top: 17px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 11px;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+
+/* ============================= */
+/* VERY SMALL PHONES */
+/* ============================= */
+
+@media (max-width: 380px) {
+
+    .page {
+        padding: 18px 7px;
+    }
+
+    .card {
+        padding: 17px 11px;
+    }
+
+    h1 {
+        font-size: 21px;
+        line-height: 27px;
+    }
+
+    .main-crop {
+        font-size: 21px;
+    }
+
+    .soil-grid {
+        gap: 5px;
+    }
+
+    .climate-grid {
+        gap: 4px;
+    }
+
+    .climate-value {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 12px;
     }
 }
 </style>

@@ -318,32 +318,71 @@ button:hover {
    SMALL SCREEN
    ============================== */
 
+/* ==============================
+   MOBILE / TABLET
+   ============================== */
+
 @media (max-width: 700px) {
 
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
     .background {
-        padding: 10px;
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+
+        padding: 25px 12px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-position: center;
+        background-attachment: scroll;
     }
 
     .login-card {
-        width: 92%;
-        max-width: 450px;
+        width: 100%;
+        max-width: 430px;
 
-        height: 94vh;
+        /* Important: don't force card to 94vh */
+        height: auto;
+        min-height: auto;
 
-        padding: 22px 28px;
+        padding: 28px 24px;
+
+        border-radius: 20px;
+    }
+
+    .logo {
+        width: 60px;
+        height: 60px;
+
+        font-size: 30px;
+
+        margin-bottom: 10px;
     }
 
     .login-card h1 {
-        font-size: 29px;
+        font-size: 28px;
+        line-height: 1.15;
     }
 
     .login-card h2 {
-        font-size: 26px;
+        font-size: 25px;
+        line-height: 1.15;
     }
 
     .subtitle {
-        font-size: 15px;
-        margin-bottom: 20px;
+        font-size: 14px;
+        margin-bottom: 21px;
     }
 
     form label {
@@ -351,60 +390,144 @@ button:hover {
     }
 
     .input-container {
-        height: 46px;
+        width: 100%;
+        height: 47px;
+
         margin-bottom: 15px;
+
+        padding: 0 12px;
+    }
+
+    .icon {
+        font-size: 17px;
+        margin-right: 9px;
+    }
+
+    .input-container input {
+        font-size: 15px;
+        min-width: 0;
     }
 
     button {
-        height: 46px;
+        width: 100%;
+        height: 47px;
+
+        font-size: 15px;
+    }
+
+    .signup {
+        font-size: 13px;
+        margin-top: 16px;
     }
 }
 
 
 /* ==============================
-   SHORT SCREEN
+   SMALL MOBILE PHONES
    ============================== */
 
-@media (max-height: 700px) {
+@media (max-width: 400px) {
+
+    .background {
+        padding: 18px 9px;
+    }
 
     .login-card {
-        height: 94vh;
+        width: 100%;
 
+        padding: 24px 17px;
+
+        border-radius: 18px;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+
+        font-size: 28px;
+    }
+
+    .login-card h1 {
+        font-size: 24px;
+    }
+
+    .login-card h2 {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    form label {
+        font-size: 13px;
+    }
+
+    .input-container {
+        height: 45px;
+    }
+
+    .input-container input {
+        font-size: 14px;
+    }
+
+    button {
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .signup {
+        font-size: 12px;
+    }
+}
+
+
+/* ==============================
+   VERY SHORT PHONE SCREENS
+   ============================== */
+
+@media (max-height: 650px) and (max-width: 700px) {
+
+    .background {
         padding-top: 15px;
         padding-bottom: 15px;
     }
 
+    .login-card {
+        padding-top: 20px;
+        padding-bottom: 18px;
+    }
+
     .logo {
-        width: 52px;
-        height: 52px;
-
-        font-size: 27px;
-
-        margin-bottom: 7px;
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        margin-bottom: 6px;
     }
 
     .login-card h1 {
-        font-size: 29px;
+        font-size: 23px;
     }
 
     .login-card h2 {
-        font-size: 26px;
+        font-size: 21px;
     }
 
     .subtitle {
-        margin-bottom: 16px;
+        margin-bottom: 14px;
     }
 
     .input-container {
-        height: 43px;
-        margin-bottom: 12px;
+        height: 42px;
+        margin-bottom: 10px;
     }
 
     button {
-        height: 43px;
+        height: 42px;
     }
 
     .signup {
-        margin-top: 12px;
+        margin-top: 10px;
     }
 }

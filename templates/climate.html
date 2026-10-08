@@ -188,45 +188,144 @@ button:hover{
 .input-center{
     width:100%;
 }
-@media(max-width:800px){
-    .sidebar{
-        width:200px;
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+    /* Hide desktop sidebar on tablet/mobile */
+    .sidebar {
+        display: none !important;
     }
-    .page{
-        margin-left:200px;
+
+    /* Full screen content */
+    .page {
+        margin-left: 0 !important;
+        width: 100%;
+        min-height: 100vh;
+        padding: 90px 20px 30px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 500px;
+        padding: 25px;
+    }
+
+    .lang-container {
+        top: 15px;
+        right: 15px;
     }
 }
-@media(max-width:600px){
-    .sidebar{
-        width:65px;
-        padding:20px 8px;
+
+
+/* ============================= */
+/* MOBILE PHONE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
     }
-    .logo-text,
-    .menu-item span:last-child{
-        display:none;
+
+    .page {
+        margin-left: 0 !important;
+        padding: 75px 12px 25px;
+        align-items: flex-start;
     }
-    .sidebar-logo{
-        justify-content:center;
-        padding:5px 0 30px;
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 16px;
+        border-radius: 18px;
     }
-    .menu-item{
-        justify-content:center;
-        padding:13px 5px;
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
     }
-    .sidebar-bottom{
-        left:8px;
-        right:8px;
+
+    label {
+        font-size: 13px;
     }
-    .page{
-        margin-left:65px;
-        padding:25px 12px;
+
+    input,
+    select {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        margin: 5px 0 12px;
+        min-height: 45px;
     }
-    .card{
-        width:100%;
+
+    button {
+        width: 100%;
+        min-height: 48px;
+        font-size: 14px;
     }
-    .form-row{
-        flex-direction:column;
-        gap:0;
+
+    /* Temperature + Humidity become vertical */
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .input-center {
+        width: 100%;
+    }
+
+    #weatherStatus {
+        font-size: 12px;
+        line-height: 17px;
+        padding: 9px;
+    }
+
+    .lang-container {
+        top: 10px;
+        right: 10px;
+    }
+
+    .lang-select {
+        font-size: 12px;
+        padding: 8px 28px 8px 10px;
+        border-radius: 10px;
+    }
+}
+
+
+/* ============================= */
+/* VERY SMALL PHONES */
+/* ============================= */
+
+@media (max-width: 380px) {
+
+    .page {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .card {
+        padding: 18px 13px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input,
+    select {
+        font-size: 14px;
+    }
+
+    .lang-select {
+        font-size: 11px;
     }
 }
 </style>

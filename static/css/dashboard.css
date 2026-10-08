@@ -431,7 +431,12 @@ body {
    RESPONSIVE
 ========================= */
 
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width: 1000px) {
+
     .sidebar {
         width: 210px;
     }
@@ -440,11 +445,6 @@ body {
         margin-left: 210px;
         width: calc(100% - 210px);
         padding: 25px;
-    }
-
-    .welcome-section {
-        display: flex;
-        justify-content: center;
     }
 
     .analysis-card {
@@ -457,91 +457,304 @@ body {
     }
 }
 
+
 /* =========================
    MOBILE
 ========================= */
 
 @media (max-width: 700px) {
+
+    /* Hide desktop sidebar completely */
     .sidebar {
-        width: 70px;
-        padding: 20px 10px;
+        display: none !important;
     }
 
-    .logo h2,
-    .menu-item span:last-child {
-        display: none;
-    }
-
-    .logo {
-        justify-content: center;
-        padding: 5px 0 30px;
-    }
-
-    .menu-item {
-        justify-content: center;
-        padding: 13px 5px;
-    }
-
-    .menu-item span:first-child {
-        font-size: 20px;
-    }
-
+    /* Full phone width */
     .main-content {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-        padding: 20px;
+        margin-left: 0 !important;
+        width: 100% !important;
+
+        min-height: 100vh;
+
+        padding: 20px 14px 40px;
+
+        overflow-x: hidden;
     }
+
+
+    /* =========================
+       TOP BAR
+    ========================= */
 
     .topbar {
-        margin-bottom: 25px;
+        margin-bottom: 22px;
+
+        display: flex;
+        align-items: flex-start;
     }
 
     .topbar h1 {
-        font-size: 27px;
+        font-size: 25px;
+        line-height: 1.2;
     }
 
     .topbar p {
-        font-size: 15px;
+        font-size: 14px;
+        line-height: 1.4;
     }
 
-    .user-info {
+    .user-section {
+        gap: 8px;
+    }
+
+    .notification {
+        font-size: 18px;
+    }
+
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-info {
         display: none;
+    }
+
+
+    /* =========================
+       WELCOME SECTION
+    ========================= */
+
+    .welcome-section {
+        width: 100%;
+
+        margin-bottom: 35px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .welcome-text {
         display: contents;
     }
 
+
+    /* =========================
+       ANALYSIS CARD
+    ========================= */
+
     .analysis-card {
-        width: 95%;
-        padding: 35px 25px;
-        min-height: 330px;
+        width: 100%;
+        max-width: 500px;
+
+        min-height: auto;
+
+        padding: 30px 20px;
+
+        border-radius: 22px;
     }
 
     .analysis-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 40px;
+        width: 75px;
+        height: 75px;
+
+        font-size: 38px;
+
+        border-radius: 20px;
+
+        margin-bottom: 18px;
     }
 
     .analysis-content h3 {
-        font-size: 30px;
+        font-size: 27px;
+
+        line-height: 1.2;
+
+        margin-bottom: 10px;
     }
 
     .analysis-content p {
-        font-size: 17px;
+        font-size: 15px;
+
+        line-height: 1.5;
+
+        margin-bottom: 20px;
     }
 
     .start-button {
-        min-width: 220px;
-        font-size: 17px;
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 13px 20px;
+
+        font-size: 15px;
+
+        border-radius: 13px;
+    }
+
+
+    /* =========================
+       PROJECT OVERVIEW
+    ========================= */
+
+    .overview-section {
+        width: 100%;
+
+        margin-top: 5px;
+    }
+
+    .section-heading {
+        margin-bottom: 17px;
+    }
+
+    .section-heading span {
+        font-size: 12px;
+
+        letter-spacing: 1.3px;
     }
 
     .section-heading h2 {
-        font-size: 25px;
+        font-size: 23px;
+
+        line-height: 1.25;
     }
 
     .overview-grid {
         grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .overview-card {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 20px;
+
+        border-radius: 16px;
+    }
+
+    .card-icon {
+        width: 47px;
+        height: 47px;
+
+        font-size: 24px;
+
+        margin-bottom: 13px;
+    }
+
+    .overview-card h3 {
+        font-size: 19px;
+
+        margin-bottom: 7px;
+    }
+
+    .overview-card p {
+        font-size: 14px;
+
+        line-height: 1.5;
+
+        margin-bottom: 12px;
+    }
+
+    .card-link {
+        font-size: 13px;
     }
 }
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+
+    .main-content {
+        padding: 16px 10px 30px;
+    }
+
+    .topbar {
+        margin-bottom: 18px;
+    }
+
+    .topbar h1 {
+        font-size: 22px;
+    }
+
+    .topbar p {
+        font-size: 13px;
+    }
+
+    .profile-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .analysis-card {
+        padding: 25px 16px;
+    }
+
+    .analysis-icon {
+        width: 65px;
+        height: 65px;
+
+        font-size: 33px;
+
+        border-radius: 17px;
+    }
+
+    .analysis-content h3 {
+        font-size: 24px;
+    }
+
+    .analysis-content p {
+        font-size: 14px;
+    }
+
+    .start-button {
+        font-size: 14px;
+
+        padding: 12px 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 21px;
+    }
+
+    .overview-card {
+        padding: 17px;
+    }
+}
+
+
+/* =========================
+   VERY SMALL / SHORT PHONES
+========================= */
+
+@media (max-width: 360px) {
+
+    .main-content {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .topbar h1 {
+        font-size: 20px;
+    }
+
+    .analysis-card {
+        padding: 22px 14px;
+    }
+
+    .analysis-content h3 {
+        font-size: 22px;
+    }
+
+    .overview-card h3 {
+        font-size: 18px;
+    }
+}
+    
