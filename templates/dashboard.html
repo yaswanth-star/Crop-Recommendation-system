@@ -277,6 +277,65 @@
             </div> 
  
         </section> 
+                
+
+        <!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
+
+    <a href="{{ url_for('dashboard') }}"
+       class="mobile-nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+        <span class="nav-icon">🏠</span>
+        <small>Home</small>
+    </a>
+
+    <a href="{{ url_for('soil') }}"
+       class="mobile-nav-item {% if active_page == 'soil' %}active{% endif %}">
+        <span class="nav-icon">🧪</span>
+        <small>Soil</small>
+    </a>
+
+    <a href="#"
+       class="mobile-nav-item {% if active_page == 'results' %}active{% endif %}">
+        <span class="nav-icon">📊</span>
+        <small>Results</small>
+    </a>
+
+    <a href="{{ url_for('history') }}"
+       class="mobile-nav-item {% if active_page == 'history' %}active{% endif %}">
+        <span class="nav-icon">📜</span>
+        <small>History</small>
+    </a>
+
+    <button type="button"
+            class="mobile-nav-item account-btn"
+            onclick="toggleAccountMenu()">
+
+        <span class="nav-icon">👤</span>
+        <small>Account</small>
+
+    </button>
+
+</div>
+        </div>
+
+        <!-- MOBILE ACCOUNT MENU -->
+        <div class="mobile-account-menu" id="mobileAccountMenu">
+
+            <a href="#">
+                👤 Profile
+            </a>
+
+            <a href="#">
+                ⚙️ Settings
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </main>
  
     </main> 
  
@@ -306,6 +365,10 @@ document.addEventListener("DOMContentLoaded", function(){
     }); 
  
 }); 
+function toggleAccountMenu() {
+    const menu = document.getElementById("mobileAccountMenu");
+    menu.classList.toggle("show");
+}
 </script> 
  
 </body> 

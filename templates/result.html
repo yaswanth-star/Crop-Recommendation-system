@@ -715,6 +715,39 @@ document.querySelectorAll(".other-crop-icon").forEach(function(icon){
 
 });
 </script>
+<div class="mobile-bottom-nav">
 
+    <a href="{{ url_for('dashboard') }}"
+       class="mobile-nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+        <span>🏠</span>
+        <small>Home</small>
+    </a>
+
+    <a href="{{ url_for('soil') }}"
+       class="mobile-nav-item {% if active_page == 'soil' %}active{% endif %}">
+        <span>🧪</span>
+        <small>Soil</small>
+    </a>
+
+    <a href="#"
+       class="mobile-nav-item {% if active_page == 'results' %}active{% endif %}">
+        <span>📊</span>
+        <small>Results</small>
+    </a>
+
+    <a href="{{ url_for('history') }}"
+       class="mobile-nav-item {% if active_page == 'history' %}active{% endif %}">
+        <span>📜</span>
+        <small>History</small>
+    </a>
+
+    <button type="button"
+            class="mobile-nav-item account-btn"
+            onclick="toggleAccountMenu()">
+        <span>👤</span>
+        <small>Account</small>
+    </button>
+
+</div>
 </body>
 </html>

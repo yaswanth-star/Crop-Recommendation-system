@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Climate Details</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -328,7 +329,170 @@ button:hover{
         font-size: 11px;
     }
 }
+/* =========================================================
+   CLIMATE PAGE - MOBILE BOTTOM NAVIGATION
+   ========================================================= */
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 700px) {
+
+    .mobile-bottom-nav {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr);
+
+        position: fixed !important;
+        left: 10px !important;
+        right: 10px !important;
+        bottom: 10px !important;
+
+        width: auto !important;
+        height: 68px !important;
+
+        padding: 5px !important;
+
+        box-sizing: border-box;
+
+        background: rgba(255,255,255,0.88) !important;
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        border: 1px solid rgba(255,255,255,0.95) !important;
+        border-radius: 24px !important;
+
+        z-index: 999999 !important;
+
+        align-items: center;
+
+        box-shadow:
+            0 15px 40px rgba(23,61,43,0.20),
+            0 4px 12px rgba(23,61,43,0.08),
+            inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    .mobile-bottom-nav .mobile-nav-item {
+        display: flex !important;
+
+        width: 100% !important;
+        height: 56px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        flex-direction: column !important;
+        gap: 3px !important;
+
+        background: transparent !important;
+
+        border: none !important;
+        outline: none !important;
+
+        border-radius: 18px !important;
+
+        color: #607568 !important;
+
+        text-decoration: none !important;
+
+        font-family: Arial, sans-serif !important;
+
+        cursor: pointer;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item span {
+        display: flex !important;
+
+        width: 35px !important;
+        height: 30px !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        font-size: 21px !important;
+
+        line-height: 1 !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item small {
+        display: block !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        color: #607568 !important;
+
+        font-size: 10px !important;
+        line-height: 1 !important;
+
+        font-weight: 700 !important;
+
+        text-decoration: none !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item.active {
+        background: linear-gradient(
+            145deg,
+            #def6e4,
+            #ebfaee
+        ) !important;
+
+        color: #18733e !important;
+
+        box-shadow:
+            0 5px 15px rgba(40,125,67,0.13);
+    }
+
+    .mobile-bottom-nav .mobile-nav-item.active small {
+        color: #18733e !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item:active {
+        transform: scale(0.92);
+    }
+
+    /* Prevent bottom navigation from covering the form */
+
+    .page {
+        padding-bottom: 115px !important;
+    }
+}
+
+
+/* Small phones */
+
+@media (max-width: 380px) {
+
+    .mobile-bottom-nav {
+        left: 7px !important;
+        right: 7px !important;
+        bottom: 7px !important;
+
+        height: 64px !important;
+
+        border-radius: 21px !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item {
+        height: 54px !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item span {
+        font-size: 19px !important;
+    }
+
+    .mobile-bottom-nav .mobile-nav-item small {
+        font-size: 9px !important;
+    }
+
+}
 </style>
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile-nav.css') }}">
 </head>
 <body>
 
@@ -489,5 +653,39 @@ async function fetchCityWeather(){
     }
 }
 </script>
+<div class="mobile-bottom-nav">
+
+    <a href="{{ url_for('dashboard') }}"
+       class="mobile-nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+        <span>🏠</span>
+        <small>Home</small>
+    </a>
+
+    <a href="{{ url_for('soil') }}"
+       class="mobile-nav-item {% if active_page == 'soil' %}active{% endif %}">
+        <span>🧪</span>
+        <small>Soil</small>
+    </a>
+
+    <a href="#"
+       class="mobile-nav-item {% if active_page == 'results' %}active{% endif %}">
+        <span>📊</span>
+        <small>Results</small>
+    </a>
+
+    <a href="{{ url_for('history') }}"
+       class="mobile-nav-item {% if active_page == 'history' %}active{% endif %}">
+        <span>📜</span>
+        <small>History</small>
+    </a>
+
+    <button type="button"
+            class="mobile-nav-item account-btn"
+            onclick="toggleAccountMenu()">
+        <span>👤</span>
+        <small>Account</small>
+    </button>
+
+</div>
 </body>
 </html>
